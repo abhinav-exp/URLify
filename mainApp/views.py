@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .forms import MyUserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from .models import Snippet
+import validators
 
 # Create your views here.
 def registeration(request):
@@ -48,3 +49,13 @@ def inbox(request):
         s.save()
         return HttpResponse(str(s.link))
     return render(request, "inbox.html")
+
+def display_snippet(request, link):
+    s = str(Snippet.objects.get(link = link).text)
+    if validators.url(s):
+        return HttpResponseRedirect(s)
+    else:
+        return HttpResponse(str(s))
+
+
+
