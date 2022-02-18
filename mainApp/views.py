@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from .models import Snippet
 import validators
+from datetime import datetime
 
 # Create your views here.
 def registeration(request):
@@ -57,5 +58,14 @@ def display_snippet(request, link):
     else:
         return HttpResponse(str(s))
 
-
+def list_snippet(request):
+    user = request.user
+    s = Snippet.objects.all()
+    s = s.filter(expiry_time__gte = datetime.now())
+    #print(s)
+    objs = s.values()
+    #print(objs)
+    return render(request, "list.html", {
+        "objs" : objs,
+    })
 

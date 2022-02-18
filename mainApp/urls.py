@@ -6,5 +6,6 @@ urlpatterns = [
     path('login', loggingin),
     path('inbox', inbox),
     path('<uuid:link>', display_snippet),
+    path('list', list_snippet),
 
 ]

@@ -1,0 +1,26 @@
+<html>
+    <body>
+        <table>
+            <thead>
+            <tr>
+                <th>Link</th>
+                <th>Text</th>
+                <th>Creation Time</th>
+                <th>Expiry Time</th>
+
+            </tr>
+
+                {% for obj in objs %}
+                <tr>
+                    <td>{{ obj.link }}</td>
+                    <td>{{ obj.text }}</td>
+                    <td>{{ obj.creation_time }}</td>
+                    <td>{{ obj.expiry_time }}</td>
+                    <td> <a href="/{{obj.link}}/edit">edit</a> </td>
+                </tr>
+                {% endfor %}
+            
+        </table>
+        
+    </body>
+</html>
