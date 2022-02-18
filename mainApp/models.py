@@ -11,3 +11,8 @@ class Snippet(models.Model):
     creation_time = models.DateTimeField(default=datetime.now)
     expiry_time = models.DateTimeField(default = expiry_time_func)
     text = models.TextField()
+
+class History(models.Model):
+    snippet = models.ForeignKey(Snippet, on_delete = models.CASCADE)
+    access_time = models.DateTimeField(default = datetime.now)
+    ip = models.GenericIPAddressField()

@@ -1,0 +1,16 @@
+<html>
+    <body>
+        <table>
+            <tr>
+                <th>Access Time</th>
+                <th>IP Address</th>
+            </tr>
+            {% for obj in objs %}
+            <tr>
+                <td>{{ obj.access_time }}</td>
+                <td>{{ obj.ip }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>

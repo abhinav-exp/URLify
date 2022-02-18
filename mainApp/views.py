@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .forms import MyUserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from .models import Snippet
+from .models import Snippet, History
 import validators
 from datetime import datetime
 
@@ -40,11 +40,11 @@ def inbox(request):
         print(request.FILES)
         text = ""
         if request.FILES :
-            text = request.FILES['filetext'].read()
-            print(request.FILES['filetext'].read())
+            text = request.FILES['filetext'].read().decode("utf-8") 
+            print(str(request.FILES['filetext'].read()))
         else:
-            text = request.POST['texttext']
-            print(request.POST['texttext'])
+            text = request.POST['texttext'].decode("utf-8")
+            print(str(request.POST['texttext']))
         user = request.user
         s = Snippet(user = user, text = text)
         s.save()
@@ -52,9 +52,17 @@ def inbox(request):
     return render(request, "inbox.html")
 
 def display_snippet(request, link):
-    s = str(Snippet.objects.get(link = link).text)
-    if validators.url(s):
-        return HttpResponseRedirect(s)
+    s = Snippet.objects.get(link = link)
+    ip = ""
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    obj = History(snippet = s, ip = ip)
+    obj.save()
+    if validators.url(s.text):
+        return HttpResponseRedirect(s.text)
     else:
         return HttpResponse(str(s))
 
@@ -69,3 +77,9 @@ def list_snippet(request):
         "objs" : objs,
     })
 
+def edit_history(request, link):
+    s = Snippet.objects.get(link = link)
+    objs = History.objects.all().filter(snippet = s)
+    return render(request, "edit.html", {
+        "objs" : objs,
+    })
