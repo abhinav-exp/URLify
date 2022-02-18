@@ -43,7 +43,7 @@ def inbox(request):
             text = request.FILES['filetext'].read().decode("utf-8") 
             print(str(request.FILES['filetext'].read()))
         else:
-            text = request.POST['texttext'].decode("utf-8")
+            text = request.POST['texttext']
             print(str(request.POST['texttext']))
         user = request.user
         s = Snippet(user = user, text = text)
