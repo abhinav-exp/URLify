@@ -48,7 +48,7 @@ def inbox(request):
         user = request.user
         s = Snippet(user = user, text = text)
         s.save()
-        return HttpResponse(str(s.link))
+        return HttpResponseRedirect(str(s.link))
     return render(request, "inbox.html")
 
 def display_snippet(request, link):
@@ -64,7 +64,9 @@ def display_snippet(request, link):
     if validators.url(s.text):
         return HttpResponseRedirect(s.text)
     else:
-        return HttpResponse(str(s))
+        return render(request, "display.html", {
+            "obj" : s
+        })
 
 def list_snippet(request):
     user = request.user

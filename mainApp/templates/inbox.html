@@ -1,10 +1,42 @@
 <html>
+    <title>URLify</title>
+    <style>
+        body{
+            text-align: center;
+        }
+        h1{
+            font-size: 1000%;
+        }
+    </style>
     <body>
-        <form action="" method="post" enctype="multipart/form-data">
+        <h1>URLify</h1>
+        <form action="" method="post" enctype="multipart/form-data" id="onlyform">
             {% csrf_token %}
-            <textarea rows="50" cols="100" placeholder="This is the default text" name = "texttext"></textarea>
-            <input type="file" id="myFile" name="filetext">
-            <input type="submit">
+            <textarea id="textbox" rows="25" cols="100" placeholder="This is the default text" name = "texttext"></textarea>
+            <br><br>
+            <input id="filebox" type="file" id="myFile" name="filetext">
         </form>
+        <button onclick="myFunction()">Submit</button> 
+        <div id = "message"> </div>
+        <script>
+            function myFunction() {
+              var t1 = document.getElementById("textbox").value;
+              var t2 = document.getElementById("filebox").value;
+              console.log(t1);
+              console.log(t2);
+              if(t1 === "" && t2 === "")
+              {
+                document.getElementById("message").innerHTML = "please write something on the box or select a file";
+              }
+              else if(t1 !== "" && t2 !== "")
+              {
+                  document.getElementById("message").innerHTML = "either write something on the box or select a file"
+              }
+              else
+              {
+                document.getElementById("onlyform").submit()
+              }
+            }
+        </script>
     </body>
 </html>
