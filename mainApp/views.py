@@ -30,3 +30,16 @@ def loggingin(request):
                 "error" : "INVALID USERNAME or PASSWORD"
             })
     return render(request, "logIn.html")
+
+def inbox(request):
+    if request.method == 'POST':
+        print(request.POST)
+        print(request.FILES)
+        text = ""
+        if request.FILES :
+            text = request.FILES['filetext'].read()
+            print(request.FILES['filetext'].read())
+        else:
+            text = request.POST['texttext']
+            print(request.POST['texttext'])
+    return render(request, "inbox.html")
