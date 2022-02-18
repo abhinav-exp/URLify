@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .forms import MyUserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from .models import Snippet
 
 # Create your views here.
 def registeration(request):
@@ -42,4 +43,8 @@ def inbox(request):
         else:
             text = request.POST['texttext']
             print(request.POST['texttext'])
+        user = request.user
+        s = Snippet(user = user, text = text)
+        s.save()
+        return HttpResponse(str(s.link))
     return render(request, "inbox.html")
