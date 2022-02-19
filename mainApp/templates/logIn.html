@@ -1,12 +1,42 @@
 <html>
+    <title>URLify</title>
+    <style>
+        body{
+            text-align: center;
+        }
+        h1{
+            font-size: 1000%;
+        }
+        h2{
+            font-size: 300%;
+        }
+        label{
+            font-size: 100%;
+        }
+        input{
+            height: 3%;
+        }
+        table{
+            border: 1px black solid;
+            height: 500;
+            width: 750;
+            margin: auto;
+            text-align: center;
+            padding-top: 0%;
+        }
+    </style>
     <body>
+        <h1>URLify</h1>
         <h2>Log In</h2>
         <form method="post">
         {% csrf_token %}
         <label>Username</label> <input type="text" name="username"> 
+        <br><br>
         <label>Password</label> <input type="password" name="password"> 
+        <br><br>
         {{error}}
         <button type="submit">Log In</button>
         </form>
+        <a href="/register">Create New Account</a>
     </body>
 </html>

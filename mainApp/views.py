@@ -49,6 +49,9 @@ def inbox(request):
         s = Snippet(user = user, text = text)
         s.save()
         return HttpResponseRedirect(str(s.link))
+    if str(request.user) == "AnonymousUser":
+        return render(request, "logIn.html")
+    print(request.user)
     return render(request, "inbox.html")
 
 def display_snippet(request, link):
