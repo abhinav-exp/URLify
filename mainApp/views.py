@@ -14,6 +14,7 @@ def registeration(request):
         print(request.POST)
         if Uform.is_valid():
             Uform.save()
+            return HttpResponseRedirect("/login")
         else : 
             #Uform.save()
             print(Uform.errors)
@@ -28,6 +29,7 @@ def loggingin(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            return HttpResponseRedirect('/')
         else :
             return render(request, "logIn.html", {
                 "error" : "INVALID USERNAME or PASSWORD"
